@@ -1,4 +1,8 @@
 bird
-
+crocodile
 cow
 chicken hello
+:wq
+:qw
+:q
+

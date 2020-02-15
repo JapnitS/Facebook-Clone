@@ -1,58 +1,45 @@
 #!/bin/bash
 
-
-echo Enter arg number you want to test ?
+echo Add an argument for the feature 
 read test
 
-if [ ! $test -eq 2 ] && [ ! $test -eq 5 ] && [ ! $test -eq 6 ] ; then
-echo Not a correct input ! please try again 
-read test
+if [ $test != 2 ] && [ $test != 5 ] && [ $test != 6 ] ; then
+	echo The argument is not correct! Please try again
+	read test
 fi
-
-IFS=$'\n'
-feature_5(){
-echo Enter a file extension ?
-read filext
-
-file=$(find ../ -type f -name "*.$filext" )
-
-if [ -z "$file" ];then
-	echo number of occurences of the file with extension .$filext is 0
-else
-	count=$(echo "$file" | wc -l)
-	echo number of occurences of the file with extension .$filext is $count
-fi
-
-}
-
-feature_6(){
-echo Input a tag
-read x
-
-a=$(find ../ -type f -name "*.py")
-if [ ! -f "$x.log" ]; then
-	touch "$x.log"
-else 
-	touch "$x.log" > "$x.log"
-fi
-
-	
-echo "$( grep -E '^#' $a | grep -w  $x)" >> $x.log
-
-	
-
-}
-
 feature_2(){
 if [ -f fixme.log ] ; then
 	rm fixme.log
 fi
 for e in $(find .. -type f) ; do
-	if [ $(tail -1 "$e" | egrep "#FIXME") ] ; then
+	if [ $(tail -1 "$e" | egrep "*FIXME") ] ; then
 		echo "$e" >> fixme.log
 	fi
-done 
-	
+done
+
+}
+feature_5(){
+echo Input any file extension
+read filext
+a=$(find ../ -type f -name "*.filext")
+count=$(echo "$a" | wc -l)
+if [ -z "$a" ] ; then
+	echo "Number of files with this extension are 0"
+else
+	echo "Number of files with "*.filext" are $count"
+
+fi
+}
+feature_6(){
+echo "Input any tag:"
+read x
+if [ ! -f "$x.log" ] ; then
+	touch "$x.log"
+else
+	touch "$x.log" > "$x.log"
+	f=$(find ../ -type f -name "*.py")
+	echo $(grep -E '^#' $f | grep -w $x) >> $x.log
+fi
 
 }
 feature_$test

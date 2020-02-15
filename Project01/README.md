@@ -110,6 +110,7 @@ The user shall now be able to view the output in the file named "tag".log where 
 
 
 ### > Execution :
+<<<<<<< HEAD
 # CS1XA3 Project 01 - singj36 
 
 
@@ -222,6 +223,8 @@ The user shall now be able to view the output in the file named "tag".log where 
 
 
 ### > Execution :
+=======
+>>>>>>> project01
 
 To execute the feature you shall execute the script and choose argument '2' on being prompted for a script argument
 
@@ -269,6 +272,9 @@ The Custom Feature 01 implements the following features:
 
 * The script is also capable of checking the number of auxiliary verbs and if the count is greater than the number entered by the user then to replace every occurrence of that word with a user inputted word .
 
+<<<<<<< HEAD
 
 
 
+=======
+>>>>>>> project01

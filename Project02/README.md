@@ -10,7 +10,9 @@ To visit the webpage you should click on the following link:
 
 [Japnit Singh's CV ](https://mac1xa3.ca/u/singj36/)
 ## Implementation
-The Webpage is a combination of HTML,JS and CSS code where I used HTML to increase the page interactiveness by providing hyper references, buttons, heading and references:
+The Webpage is a combination of HTML,JS and CSS code .
+
+ I used HTML to increase the page interactiveness by providing hyper references, buttons, heading and references:
 
 
 Implements references at the required elements which refer to a more detailed Block of the selected element:
@@ -26,6 +28,8 @@ Implements references at the required elements which refer to a more detailed Bl
 </span></a></div>
 
 ```
+which refers the click on Heading "Volunteering" to a section down below with the same element Id = "volun" and a detailed description of my volunteering positions.
+
 Hyper reference provided to make a call from within the webpage
 
 Used fa-fa font awesome icons to increase the scalability of the webpage:
@@ -36,7 +40,8 @@ Used fa-fa font awesome icons to increase the scalability of the webpage:
 
 
 ## Custom JavaScript Features
-1. The Webpage gives the user the option to switch between dark mode theme and light mode theme.
+1.	The Webpage gives the user the option to switch between dark mode theme and light mode theme.
+*The user can find the dark mode button on the top left corner of the webpage!
 
 The feature was implemented using a combination of JS, CSS and HTML code:
 ```HTML
@@ -95,7 +100,6 @@ function topFunction() {
 
 
 
-which refers the click on Heading "Volunteering" to a section down below with the same element Id = "volun"
 
 
 
@@ -109,4 +113,4 @@ which refers the click on Heading "Volunteering" to a section down below with th
 
 
 ## References
-[Naomi-CodePen](https://codepen.io/astronaomical/pen/KexYgb)
+[Naomi-CodePen

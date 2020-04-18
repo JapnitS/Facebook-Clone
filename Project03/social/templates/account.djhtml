@@ -7,8 +7,17 @@
         <div class="w3-col m12">
             <div class="w3-card w3-round w3-white">
                 <div class="w3-container w3-padding">
-                    <h6 class="w3-opacity">Change Password</h6>
-                    <!--                     TODO Objective 3: Add Password Change Form -->
+                   <!-- <button  class="w3-opacity"onclick="window.location.href = '{% url 'social:change_view' %}' ;">Change Password </button> -->
+                    <form method="post" id="passchangeform" action="{% url 'social:change_view' %}">
+                        {% csrf_token %}
+                        
+                        <div id = 'id01'>
+                        {{ change_form }}
+                        <button  type="submit" value="Submit">Change Password for user : {{ user_info.user }}</button> 
+                     
+                    <!-- <input type="submit" value="Submit" /> -->
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -17,9 +26,26 @@
         <div class="w3-col m12">
             <div class="w3-card w3-round w3-white">
                 <div class="w3-container w3-padding">
-                    <h6 class="w3-opacity">Update Info</h6>
+                    <form method="post" id="update_form" action="{% url 'social:change_user_view' %}">
+                        {% csrf_token %}
+                        <p><label for="employment"><b>Employment</b></label>
+                        <input type ="text" placeholder="Enter Employment.." value="{{user_info.employment}}" name="employment"></p>
+                        <br><p><label for="location"><b>Location</b></label>    
+                        <input type ="text" placeholder="Enter Location.." value="{{user_info.location}}" name="location"></p>      
+                        <br><p><label for="birthday"><b>Birthday</b></label>
+                        <input type ="datetime" placeholder="YYYY-MM-DD" value="{{birth}}" name="birthday" required></p> 
+                        <br><p><label for="interest"><b>Interests</b></label>
+                        <input type ="text" placeholder="Interests.." name="interest" ></p>
+
+                        <br><button name="change_user_view" type="submit" value="Submit">Update Info for user : {{ user_info.user }} </button>
+                        
                     <!--                     TODO Objective 3: Add User Info Update Forms -->
                 </div>
+
+                </form>
+                {% if u_failed %}
+                    <p style="color:red">Unable to Update Information, Please try Again</p>
+                {% endif %}
             </div>
         </div>
     </div>

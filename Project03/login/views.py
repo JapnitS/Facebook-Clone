@@ -1,10 +1,11 @@
-from django.http import HttpResponse,HttpResponseNotFound
-from django.shortcuts import render,redirect
+from django.http import HttpResponse, HttpResponseNotFound
+from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, PasswordChangeForm
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib import messages
 
 from social import models
+
 
 def login_view(request):
     """Serves lagin.djhtml from /e/macid/ (url name: login_view)
@@ -22,48 +23,58 @@ def login_view(request):
         password = request.POST['password']
         user = authenticate(request, username=username, password=password)
         if user is not None:
-            login(request,user)
+            login(request, user)
             request.session['failed'] = False
             return redirect('social:messages_view')
         else:
             request.session['failed'] = True
 
     form = AuthenticationForm(request.POST)
-    failed = request.session.get('failed',False)
-    context = { 'login_form' : form,
-                'failed' : failed }
+    failed = request.session.get('failed', False)
+    context = {'login_form': form,
+               'failed': failed}
 
-    return render(request,'login.djhtml',context)
+    return render(request, 'login.djhtml', context)
+
 
 def logout_view(request):
     """Redirects to login_view from /e/macid/logout/ (url name: logout_view)
-    Parameters
-    ----------
-      request: (HttpRequest) - expected to be an empty get request
-    Returns
-    -------
-      out: (HttpResponse) - perform User logout and redirects to login_view
+Parameters
+----------
+  request: (HttpRequest) - expected to be an empty get request
+Returns
+-------
+  out: (HttpResponse) - perform User logout and redirects to login_view
     """
     # TODO Objective 4 and 9: reset sessions variables
 
     # logout user
     logout(request)
-
+    request.session['limit'] = request.session.get('limit', 1)
     return redirect('login:login_view')
 
+
 def signup_view(request):
-    """Serves signup.djhtml from /e/macid/signup (url name: signup_view)
-    Parameters
-    ----------
-      request : (HttpRequest) - expected to be an empty get request
-    Returns
-    -------
-      out : (HttpRepsonse) - renders signup.djhtml
-    """
-    form = None
+    form = UserCreationForm()
+    failed = request.session.get('create_failed', False)
+    context = {'create_form': form, 'create_failed': failed}
+    return render(request, 'signup.djhtml', context)
 
-    # TODO Objective 1: implement signup view
 
-    context = { 'signup_form' : form }
+def create_view(request):
 
-    return render(request,'signup.djhtml',context)
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            raw_password = form.cleaned_data.get('password1')
+            models.UserInfo.objects.create_user_info(
+                username=username, password=raw_password)
+            user = authenticate(request, username=username,
+                                password=raw_password)
+            login(request, user)
+            return redirect('social:messages_view')
+    request.session['create_failed'] = True
+    return redirect('login:signup_view')
+
+    #context = { 'signup_form' : form }

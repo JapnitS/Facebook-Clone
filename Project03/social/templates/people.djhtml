@@ -4,44 +4,52 @@
 
 {% block middle_column %}
     <!-- TODO Objective 4: Use all_people list to render actual people -->
-        <div class="w3-container w3-card w3-white w3-round w3-margin"><br>
-            {% load static %}
-            <img src="{% static 'avatar.png'  %}" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px">
-            <h4>TODO Add Username</h4><br>
-            <hr class="w3-clear">
-            <p><i class="fa fa-pencil fa-fw w3-margin-right w3-text-theme"></i> TODO Add Employment </p>
-            <p><i class="fa fa-home fa-fw w3-margin-right w3-text-theme"></i> TODO Add Location </p>
-            <p><i class="fa fa-birthday-cake fa-fw w3-margin-right w3-text-theme"></i> TODO Add Birthday </p>
-                <!-- TODO Objective 5: make id unique to username and disable button if friend request already sent -->
-                <button type="button" id="fr-USERNAME" class="w3-button w3-theme-d1 w3-margin-bottom fr-button">Friend Request</button>
-        </div>
+        {% for ppl in all_people %}
+            {% if forloop.counter0 < request.session.limit %}
+                <div class="w3-container w3-card w3-white w3-round w3-margin"><br>
+                    {% load static %}
+                    <img src="{% static 'avatar.png'  %}" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px">
+                    <h4>{{ ppl.user }}</h4><br>
+                    <hr class="w3-clear">
+                    <p><i class="fa fa-pencil fa-fw w3-margin-right w3-text-theme"></i> {{ ppl.employment }} </p>
+                    <p><i class="fa fa-home fa-fw w3-margin-right w3-text-theme"></i> {{ ppl.location }} </p>
+                    <p><i class="fa fa-birthday-cake fa-fw w3-margin-right w3-text-theme"></i> {{ ppl.birthday }} </p>
+                    <!-- TODO Objective 5: make id unique to username and disable button if friend request already sent -->
+                    <button onClick="this.disabled=true;" type="button" id="fr-{{ppl.user_id}}" class="w3-button w3-theme-d1 w3-margin-bottom fr-button"{% if ppl in dis %}disabled{% endif %}>Friend Request</button>
 
-    <div class="w3-container">
-        <p><button id="more-ppl-button" class="w3-button w3-block w3-theme-l4">More</button></p>
-    </div>
+                </div>
+           
+
+            {% endif %}
+        {% endfor %}
+        <div class="w3-container">
+            <p><button id="more-ppl-button" class="w3-button w3-block w3-theme-l4">More</button></p>
+        </div>
 {% endblock %}
 
 {% block right_column %}
     <!-- TODO Objective 5: Use friend_requests list to render friend requests to user -->
-      <div class="w3-card w3-round w3-white w3-center">
-        <div class="w3-container">
-          <p>Friend Request</p>
-          {% load static %}
-          <img src="{% static 'avatar.png'  %}" alt="Avatar" style="width:50%"><br>
-          <span>TODO Add Username</span>
-          <div class="w3-row w3-opacity">
-            <div class="w3-half">
+    <div class="w3-card w3-round w3-white w3-center">
+        {% for r in friend_requests %}
+            <div class="w3-container">
+                <p>Friend Requests</p>
+                {% load static %}
+                <img src="{% static 'avatar.png'  %}" alt="Avatar" style="width:50%"><br>
+                <h4>{{r.user}}</h4>
+                <div class="w3-row w3-opacity">
+                    <div class="w3-half">
+                        <!-- TODO Objective 6: make id specific to user who sent request -->
+                        <button id="A-{{r.user_id}}" class="w3-button w3-block w3-green w3-section acceptdecline-button" title="Accept">
+                        <i class="fa fa-check" style="pointer-events: none;"></i></button>
+                    </div>
+                <div class="w3-half">
                 <!-- TODO Objective 6: make id specific to user who sent request -->
-                <button id="A-USERNAME" class="w3-button w3-block w3-green w3-section acceptdecline-button" title="Accept">
-                    <i class="fa fa-check"></i></button>
+                <button id="D-{{r.user_id}}" class="w3-button w3-block w3-red w3-section acceptdecline-button" title="Decline">
+                    <i class="fa fa-remove" style="pointer-events: none;"></i></button>
             </div>
-            <div class="w3-half">
-                <!-- TODO Objective 6: make id specific to user who sent request -->
-                <button id="D-USERNAME" class="w3-button w3-block w3-red w3-section acceptdecline-button" title="Decline">
-                    <i class="fa fa-remove"></i></button>
-            </div>
-          </div>
-        </div>
+        {% endfor %}
+    </div>
+    </div>
       </div>
       <br>
 {% endblock %}

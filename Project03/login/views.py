@@ -50,7 +50,7 @@ Returns
 
     # logout user
     logout(request)
-    request.session['limit'] = request.session.get('limit', 1)
+ 
     return redirect('login:login_view')
 
 
@@ -74,6 +74,7 @@ def create_view(request):
                                 password=raw_password)
             login(request, user)
             return redirect('social:messages_view')
+
     request.session['create_failed'] = True
     return redirect('login:signup_view')
 

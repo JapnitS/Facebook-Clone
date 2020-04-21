@@ -4,7 +4,6 @@ from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, Pass
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib import messages
 from django.http import Http404
-
 from social.forms import EditProfileForm
 from . import models
 from datetime import datetime
@@ -107,10 +106,7 @@ def change_user_view(request):
         failed = request.session.get('u_failed', True)
 
     user_info = models.UserInfo.objects.get(user=request.user)
-    if user_info.birthday is not None:
-        birth = datetime.strftime(user_info.birthday, '%Y-%m-%d')
-    else:
-        birth = ""
+
     context = {'user': request.user, 'change_u_form': form,
                'user_info': user_info, 'u_failed': failed,
                'birth': birth, }

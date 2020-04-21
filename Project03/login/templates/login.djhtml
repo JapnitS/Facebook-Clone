@@ -20,7 +20,7 @@
   <form class="modal-content animate" method="post" action="{% url 'login:login_view' %}">
        {% csrf_token %}
          <div class="imgcontainer">
-             <img src={% static "img_avatar2.png" %} alt="Avatar" class="avatar">
+             <img src={% static "img_avatar2.png" %} alt="Avatar" class="avatar" style="height:200px; width:200px";>
          </div>
      
     <div class="container">
